@@ -4,5 +4,9 @@
     <string name="app_name">TwitterC</string>
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="login_label">Connect with Twitter</string>
+    <string name="date_placeholder">Date</string>
+    <string name="tweet_body_placeholder">Tweet Body</string>
+    <string name="user_name_placeholder">User</string>
+    <string name="profile_picture">Profile Picture</string>
 
 </resources>
