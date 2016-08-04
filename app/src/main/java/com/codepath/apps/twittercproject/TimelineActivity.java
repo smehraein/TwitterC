@@ -1,9 +1,10 @@
 package com.codepath.apps.twittercproject;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,8 +22,9 @@ public class TimelineActivity extends AppCompatActivity {
 
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
-    private TweetsArrayAdapter aTweets;
-    @BindView(R.id.lvTweets) ListView lvTweets;
+    private TweetsAdapter aTweets;
+    @BindView(R.id.rvTweets)
+    RecyclerView rvTweets;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,10 @@ public class TimelineActivity extends AppCompatActivity {
         // Create data source
         tweets = new ArrayList<>();
         // Create array adapter
-        aTweets = new TweetsArrayAdapter(this, tweets);
-        // Bind array adapter to list view
-        lvTweets.setAdapter(aTweets);
+        aTweets = new TweetsAdapter(this, tweets);
+        // Bind array adapter to recycler view
+        rvTweets.setAdapter(aTweets);
+        rvTweets.setLayoutManager(new LinearLayoutManager(this));
         // Get client and populate
         client = TwitterApplication.getRestClient();
         populateTimeline();
@@ -44,7 +47,8 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                aTweets.addAll(Tweet.fromJSONArray(response));
+                tweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.notifyDataSetChanged();
             }
 
             @Override
