@@ -35,9 +35,20 @@ public class TimelineActivity extends AppCompatActivity {
         tweets = new ArrayList<>();
         // Create array adapter
         aTweets = new TweetsAdapter(this, tweets);
+
         // Bind array adapter to recycler view
         rvTweets.setAdapter(aTweets);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(layoutManager);
+        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Tweet lastTweet = tweets.get(tweets.size() - 1);
+                long maxId = lastTweet.getUid() - 1;
+                getMoreTweets(maxId);
+            }
+        });
+
         // Get client and populate
         client = TwitterApplication.getRestClient();
         populateTimeline();
@@ -45,6 +56,22 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void populateTimeline() {
         client.getHomeTimeline(new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                tweets.clear();
+                tweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("DEBUG", errorResponse.toString());
+            }
+        });
+    }
+
+    private void getMoreTweets(long maxId) {
+        client.getHomeTimeline(maxId, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 tweets.addAll(Tweet.fromJSONArray(response));
