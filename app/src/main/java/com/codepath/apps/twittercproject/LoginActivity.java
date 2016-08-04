@@ -1,10 +1,14 @@
 package com.codepath.apps.twittercproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
@@ -12,6 +16,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
 	}
 
 
@@ -26,8 +31,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		// Intent i = new Intent(this, PhotosActivity.class);
-		// startActivity(i);
+		 Intent i = new Intent(this, TimelineActivity.class);
+		 startActivity(i);
 	}
 
 	// OAuth authentication flow failed, handle the error
@@ -40,6 +45,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	// Click handler method for the button used to start OAuth flow
 	// Uses the client to initiate OAuth authorization
 	// This should be tied to a button used to login
+	@OnClick(R.id.btnLogin)
 	public void loginToRest(View view) {
 		getClient().connect();
 	}
