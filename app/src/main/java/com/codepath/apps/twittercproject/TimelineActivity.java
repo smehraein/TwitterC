@@ -1,5 +1,6 @@
 package com.codepath.apps.twittercproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -94,5 +96,10 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.timeline, menu);
         return true;
+    }
+
+    public void onClickCompose(MenuItem item) {
+        Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+        startActivity(intent);
     }
 }

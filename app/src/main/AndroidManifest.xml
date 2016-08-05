@@ -47,8 +47,12 @@
                     android:scheme="oauth" />
             </intent-filter>
         </activity>
-        <activity android:name=".TimelineActivity"
-            android:label="@string/timeline_title"/>
+        <activity
+            android:name=".TimelineActivity"
+            android:label="@string/timeline_title" />
+        <activity
+            android:name=".ComposeActivity"
+            android:label="@string/compose_tweet_title" />
     </application>
 
 </manifest>

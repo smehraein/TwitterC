@@ -5,6 +5,7 @@
         android:id="@+id/miCompose"
         android:icon="@drawable/ic_textsms_white_24dp"
         app:showAsAction="always"
-        android:title="@string/compose">
+        android:title="@string/compose"
+        android:onClick="onClickCompose">
     </item>
 </menu>

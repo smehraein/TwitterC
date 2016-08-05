@@ -10,5 +10,7 @@
     <string name="profile_picture">Profile Picture</string>
     <string name="timeline_title">Timeline</string>
     <string name="compose">Compose</string>
+    <string name="compose_tweet_title">Compose Tweet</string>
+    <string name="tweet_hint">Enter a new tweet...</string>
 
 </resources>
