@@ -12,5 +12,6 @@
     <string name="compose">Compose</string>
     <string name="compose_tweet_title">Compose Tweet</string>
     <string name="tweet_hint">Enter a new tweet...</string>
+    <string name="post_tweet">Post</string>
 
 </resources>
