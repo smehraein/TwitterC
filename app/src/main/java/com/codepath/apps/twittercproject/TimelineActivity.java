@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,12 +27,15 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetsAdapter aTweets;
     @BindView(R.id.rvTweets)
     RecyclerView rvTweets;
+    @BindView(R.id.tbTimeline)
+    Toolbar tbTimeline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         ButterKnife.bind(this);
+        setSupportActionBar(tbTimeline);
         // Create data source
         tweets = new ArrayList<>();
         // Create array adapter
@@ -83,5 +88,11 @@ public class TimelineActivity extends AppCompatActivity {
                 Log.d("DEBUG", errorResponse.toString());
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.timeline, menu);
+        return true;
     }
 }

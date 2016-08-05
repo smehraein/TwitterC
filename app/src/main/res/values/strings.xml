@@ -8,5 +8,7 @@
     <string name="tweet_body_placeholder">Tweet Body</string>
     <string name="user_name_placeholder">User</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="timeline_title">Timeline</string>
+    <string name="compose">Compose</string>
 
 </resources>
