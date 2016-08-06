@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,7 +17,9 @@ import java.util.Locale;
  * Project: TwitterCProject
  * Date: 8/3/16
  */
-public class Tweet {
+public class Tweet implements Serializable {
+    public static String INTENT_TWEET = "intent_tweet";
+
     private String body;
     private long uid;
     private String createdAt;

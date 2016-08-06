@@ -24,6 +24,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    private static int REQUEST_POST_TWEET = 20;
+
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetsAdapter aTweets;
@@ -100,6 +102,15 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void onClickCompose(MenuItem item) {
         Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_POST_TWEET);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_POST_TWEET && resultCode == RESULT_OK) {
+            Tweet tweet = (Tweet) data.getSerializableExtra(Tweet.INTENT_TWEET);
+            tweets.add(0, tweet);
+            aTweets.notifyItemInserted(0);
+        }
     }
 }
