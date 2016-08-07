@@ -68,4 +68,14 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             ButterKnife.bind(this, view);
         }
     }
+
+    public void addAll(List<Tweet> list) {
+        mTweets.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        mTweets.clear();
+        notifyDataSetChanged();
+    }
 }

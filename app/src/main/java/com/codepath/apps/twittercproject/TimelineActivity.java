@@ -2,6 +2,7 @@ package com.codepath.apps.twittercproject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +35,8 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     @BindView(R.id.tbTimeline)
     Toolbar tbTimeline;
+    @BindView(R.id.swipeContainerTimeline)
+    SwipeRefreshLayout swipeContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,13 @@ public class TimelineActivity extends AppCompatActivity {
             }
         });
 
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateTimeline();
+            }
+        });
+
         // Get client and populate
         client = TwitterApplication.getRestClient();
         populateTimeline();
@@ -68,14 +78,15 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                tweets.clear();
-                tweets.addAll(Tweet.fromJSONArray(response));
-                aTweets.notifyDataSetChanged();
+                aTweets.clear();
+                aTweets.addAll(Tweet.fromJSONArray(response));
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
+                swipeContainer.setRefreshing(false);
             }
         });
     }
