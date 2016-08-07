@@ -29,6 +29,7 @@ public class TimelineActivity extends AppCompatActivity {
     private TwitterClient client;
     private ArrayList<Tweet> tweets;
     private TweetsAdapter aTweets;
+    private LinearLayoutManager layoutManager;
     @BindView(R.id.rvTweets)
     RecyclerView rvTweets;
     @BindView(R.id.tbTimeline)
@@ -47,7 +48,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         // Bind array adapter to recycler view
         rvTweets.setAdapter(aTweets);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(layoutManager);
         rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
@@ -111,6 +112,7 @@ public class TimelineActivity extends AppCompatActivity {
             Tweet tweet = (Tweet) data.getSerializableExtra(Tweet.INTENT_TWEET);
             tweets.add(0, tweet);
             aTweets.notifyItemInserted(0);
+            layoutManager.scrollToPosition(0);
         }
     }
 }
