@@ -1,4 +1,4 @@
-package com.codepath.apps.twittercproject;
+package com.codepath.apps.twittercproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.activeandroid.query.Select;
+import com.codepath.apps.twittercproject.Adapters.TweetsAdapter;
+import com.codepath.apps.twittercproject.Adapters.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.twittercproject.R;
+import com.codepath.apps.twittercproject.TwitterApplication;
+import com.codepath.apps.twittercproject.TwitterClient;
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 

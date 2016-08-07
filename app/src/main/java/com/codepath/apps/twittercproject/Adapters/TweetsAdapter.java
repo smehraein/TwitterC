@@ -1,4 +1,4 @@
-package com.codepath.apps.twittercproject;
+package com.codepath.apps.twittercproject.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
+import com.codepath.apps.twittercproject.R;
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.codepath.apps.twittercproject.models.User;
 import com.squareup.picasso.Picasso;

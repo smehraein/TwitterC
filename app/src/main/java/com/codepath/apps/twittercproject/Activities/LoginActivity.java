@@ -1,10 +1,12 @@
-package com.codepath.apps.twittercproject;
+package com.codepath.apps.twittercproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+import com.codepath.apps.twittercproject.R;
+import com.codepath.apps.twittercproject.TwitterClient;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 import butterknife.ButterKnife;
