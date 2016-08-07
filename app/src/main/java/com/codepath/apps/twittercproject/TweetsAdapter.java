@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.activeandroid.query.Delete;
 import com.codepath.apps.twittercproject.models.Tweet;
+import com.codepath.apps.twittercproject.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -76,6 +78,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
 
     public void clear() {
         mTweets.clear();
+        new Delete().from(User.class).execute();
         notifyDataSetChanged();
     }
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.activeandroid.query.Select;
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -18,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +51,20 @@ public class TimelineActivity extends AppCompatActivity {
         // Create array adapter
         aTweets = new TweetsAdapter(this, tweets);
 
+        setupView();
+        populateFromDb();
+
+        // Get client and populate
+        client = TwitterApplication.getRestClient();
+        populateTimeline();
+    }
+
+    private void populateFromDb() {
+        List<Tweet> dbTweets = new Select().from(Tweet.class).execute();
+        aTweets.addAll(dbTweets);
+    }
+
+    private void setupView() {
         // Bind array adapter to recycler view
         rvTweets.setAdapter(aTweets);
         layoutManager = new LinearLayoutManager(this);
@@ -68,10 +84,6 @@ public class TimelineActivity extends AppCompatActivity {
                 populateTimeline();
             }
         });
-
-        // Get client and populate
-        client = TwitterApplication.getRestClient();
-        populateTimeline();
     }
 
     private void populateTimeline() {
@@ -85,7 +97,6 @@ public class TimelineActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("DEBUG", errorResponse.toString());
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -95,8 +106,7 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(maxId, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                tweets.addAll(Tweet.fromJSONArray(response));
-                aTweets.notifyDataSetChanged();
+                aTweets.addAll(Tweet.fromJSONArray(response));
             }
 
             @Override

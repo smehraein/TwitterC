@@ -71,7 +71,7 @@ public class ComposeActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     Intent intent = new Intent();
-                    Tweet tweet = Tweet.fromJSON(response);
+                    Tweet tweet = Tweet.getTweetFromJSON(response);
                     intent.putExtra(Tweet.INTENT_TWEET, tweet);
                     setResult(RESULT_OK, intent);
                     finish();
