@@ -5,7 +5,6 @@ import android.text.format.DateUtils;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,14 +25,21 @@ import java.util.Locale;
 public class Tweet extends Model implements Serializable {
     public static String INTENT_TWEET = "intent_tweet";
 
+    public enum TIMELINES_ENUM {
+        HOME_TIMELINE, MENTIONS_TIMELINE
+    }
+
     @Column(name = "Body")
     private String body;
-    @Column(name = "uid", unique = true)
+    @Column(name = "uid")
     private long uid;
     @Column(name = "Created_At")
     private String createdAt;
-    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE)
+    @Column(name = "User", onUpdate = Column.ForeignKeyAction.CASCADE, onDelete = Column.ForeignKeyAction.CASCADE,
+            notNull = true)
     private User user;
+    @Column(name = "Timeline")
+    private int timeline;
 
     // Public constructor for ActiveAndroid
     public Tweet() {
@@ -46,6 +52,10 @@ public class Tweet extends Model implements Serializable {
 
     public long getUid() {
         return uid;
+    }
+
+    public int getTimeline() {
+        return timeline;
     }
 
     public String getCreatedAt() {
@@ -77,46 +87,30 @@ public class Tweet extends Model implements Serializable {
         return user;
     }
 
-    private static Tweet fromJSON(JSONObject jsonObject) {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public static Tweet fromJSON(JSONObject jsonObject, TIMELINES_ENUM timeline) {
         Tweet tweet = new Tweet();
         try {
             tweet.body = jsonObject.getString("text");
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
-            tweet.user = User.getUserFromJSON(jsonObject.getJSONObject("user"));
+            tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+            tweet.timeline = timeline.ordinal();
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return tweet;
     }
 
-
-    public static Tweet getTweetFromJSON(JSONObject jsonObject) {
-        long uid = -1;
-        Tweet tweet;
-        try {
-            uid = jsonObject.getLong("id");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        tweet = new Select().from(Tweet.class).where("uid = ?", uid).executeSingle();
-        if (tweet == null) {
-            tweet = fromJSON(jsonObject);
-            tweet.save();
-        }
-        return tweet;
-    }
-
-    public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
+    public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray, TIMELINES_ENUM timeline) {
         ArrayList<Tweet> tweets = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
-                JSONObject tweetObject = jsonArray.getJSONObject(i);
-                Tweet tweet = getTweetFromJSON(tweetObject);
-                if (tweet != null) {
-                    tweets.add(tweet);
-                }
+                tweets.add(fromJSON(jsonArray.getJSONObject(i), timeline));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

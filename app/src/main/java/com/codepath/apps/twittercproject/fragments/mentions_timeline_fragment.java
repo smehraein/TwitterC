@@ -8,6 +8,8 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -16,13 +18,14 @@ import cz.msebera.android.httpclient.Header;
  * Date: 8/9/16
  */
 public class mentions_timeline_fragment extends tweets_list_fragment {
+
     @Override
-    void populateTimeline() {
+    protected void populateTimeline() {
         client.getMentionsTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 aTweets.clear();
-                aTweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.addAll(Tweet.fromJSONArray(response, Tweet.TIMELINES_ENUM.MENTIONS_TIMELINE));
                 swipeContainer.setRefreshing(false);
             }
 
@@ -33,12 +36,17 @@ public class mentions_timeline_fragment extends tweets_list_fragment {
         });
     }
 
+    protected void populateFromDb() {
+        List<Tweet> dbTweets = dbManager.getAllTweets(Tweet.TIMELINES_ENUM.MENTIONS_TIMELINE);
+        aTweets.addAll(dbTweets);
+    }
+
     @Override
-    void getMoreTweets(long maxId) {
+    protected void getMoreTweets(long maxId) {
         client.getMentionsTimeline(maxId, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                aTweets.addAll(Tweet.fromJSONArray(response));
+                aTweets.addAll(Tweet.fromJSONArray(response, Tweet.TIMELINES_ENUM.MENTIONS_TIMELINE));
             }
 
             @Override

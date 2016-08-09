@@ -49,6 +49,7 @@ public abstract class tweets_list_fragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         aTweets = new TweetsAdapter(getActivity(), tweets);
         setupView();
+        populateFromDb();
         populateTimeline();
         return view;
     }
@@ -89,7 +90,9 @@ public abstract class tweets_list_fragment extends Fragment {
         });
     }
 
-    abstract void populateTimeline();
+    protected abstract void populateTimeline();
 
-    abstract void getMoreTweets(long maxId);
+    protected abstract void getMoreTweets(long maxId);
+
+    protected abstract void populateFromDb();
 }
