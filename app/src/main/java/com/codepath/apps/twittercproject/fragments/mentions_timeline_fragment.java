@@ -2,14 +2,11 @@ package com.codepath.apps.twittercproject.fragments;
 
 import android.util.Log;
 
-import com.activeandroid.query.Select;
 import com.codepath.apps.twittercproject.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -18,11 +15,10 @@ import cz.msebera.android.httpclient.Header;
  * Project: TwitterCProject
  * Date: 8/9/16
  */
-public class home_timeline_fragment extends tweets_list_fragment {
+public class mentions_timeline_fragment extends tweets_list_fragment {
     @Override
     void populateTimeline() {
-        populateFromDb();
-        client.getHomeTimeline(new JsonHttpResponseHandler(){
+        client.getMentionsTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 aTweets.clear();
@@ -37,14 +33,9 @@ public class home_timeline_fragment extends tweets_list_fragment {
         });
     }
 
-    private void populateFromDb() {
-        List<Tweet> dbTweets = new Select().from(Tweet.class).execute();
-        aTweets.addAll(dbTweets);
-    }
-
     @Override
     void getMoreTweets(long maxId) {
-        client.getHomeTimeline(maxId, new JsonHttpResponseHandler(){
+        client.getMentionsTimeline(maxId, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 aTweets.addAll(Tweet.fromJSONArray(response));
