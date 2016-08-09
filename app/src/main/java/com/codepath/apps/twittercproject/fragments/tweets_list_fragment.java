@@ -3,26 +3,90 @@ package com.codepath.apps.twittercproject.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.apps.twittercproject.Adapters.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.twittercproject.Adapters.TweetsAdapter;
 import com.codepath.apps.twittercproject.R;
+import com.codepath.apps.twittercproject.TwitterApplication;
+import com.codepath.apps.twittercproject.TwitterClient;
+import com.codepath.apps.twittercproject.models.Tweet;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Author: soroushmehraein
  * Project: TwitterCProject
  * Date: 8/8/16
  */
-public class tweets_list_fragment extends Fragment {
+public abstract class tweets_list_fragment extends Fragment {
+
+    private Unbinder unbinder;
+    protected TwitterClient client;
+    private ArrayList<Tweet> tweets;
+    protected TweetsAdapter aTweets;
+    private LinearLayoutManager layoutManager;
+    @BindView(R.id.rvTweets)
+    RecyclerView rvTweets;
+    @BindView(R.id.swipeContainerTimeline)
+    SwipeRefreshLayout swipeContainer;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_tweets_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_tweets_list, container, false);
+        unbinder = ButterKnife.bind(this, view);
+        aTweets = new TweetsAdapter(getActivity(), tweets);
+        setupView();
+        populateTimeline();
+        return view;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tweets = new ArrayList<>();
+        client = TwitterApplication.getRestClient();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    private void setupView() {
+        // Bind array adapter to recycler view
+        rvTweets.setAdapter(aTweets);
+        layoutManager = new LinearLayoutManager(getActivity());
+        rvTweets.setLayoutManager(layoutManager);
+        rvTweets.addOnScrollListener(new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                Tweet lastTweet = tweets.get(tweets.size() - 1);
+                long maxId = lastTweet.getUid() - 1;
+                getMoreTweets(maxId);
+            }
+        });
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                populateTimeline();
+            }
+        });
+    }
+
+    abstract void populateTimeline();
+
+    abstract void getMoreTweets(long maxId);
 }
