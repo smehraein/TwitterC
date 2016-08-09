@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.twittercproject.Adapters.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.twittercproject.Adapters.TweetsAdapter;
+import com.codepath.apps.twittercproject.DatabaseManager;
 import com.codepath.apps.twittercproject.R;
 import com.codepath.apps.twittercproject.TwitterApplication;
 import com.codepath.apps.twittercproject.TwitterClient;
@@ -32,6 +33,7 @@ public abstract class tweets_list_fragment extends Fragment {
 
     private Unbinder unbinder;
     protected TwitterClient client;
+    protected DatabaseManager dbManager;
     private ArrayList<Tweet> tweets;
     protected TweetsAdapter aTweets;
     private LinearLayoutManager layoutManager;
@@ -56,6 +58,7 @@ public abstract class tweets_list_fragment extends Fragment {
         super.onCreate(savedInstanceState);
         tweets = new ArrayList<>();
         client = TwitterApplication.getRestClient();
+        dbManager = TwitterApplication.getDatabaseManager();
     }
 
     @Override

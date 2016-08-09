@@ -26,6 +26,7 @@ public class home_timeline_fragment extends tweets_list_fragment {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 aTweets.clear();
+                dbManager.deleteAllTweets();
                 aTweets.addAll(Tweet.fromJSONArray(response));
                 swipeContainer.setRefreshing(false);
             }
