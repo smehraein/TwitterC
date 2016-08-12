@@ -1,5 +1,6 @@
 package com.codepath.apps.twittercproject.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,6 +50,12 @@ public class TimelineActivity extends AppCompatActivity {
     public void onClickCompose(MenuItem item) {
 //        Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
 //        startActivityForResult(intent, REQUEST_POST_TWEET);
+    }
+
+    public void onProfileView(MenuItem item) {
+        Intent intent = new Intent(TimelineActivity.this, ProfileActivity.class);
+        
+        startActivity(intent);
     }
 
 //    @Override

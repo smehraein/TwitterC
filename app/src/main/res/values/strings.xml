@@ -5,13 +5,14 @@
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="login_label">Connect with Twitter</string>
     <string name="date_placeholder">Date</string>
-    <string name="tweet_body_placeholder">Tweet Body</string>
+    <string name="tweet_body_placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris lacinia blandit risus vitae tincidunt. Maecenas sed turpis odio. Maecenas et</string>
     <string name="user_name_placeholder">User</string>
     <string name="profile_picture">Profile Picture</string>
     <string name="timeline_title">Timeline</string>
     <string name="compose">Compose</string>
     <string name="compose_tweet_title">Compose Tweet</string>
-    <string name="tweet_hint">Enter a new tweet...</string>
+    <string name="tweet_hint">Enter a new tweet…</string>
     <string name="post_tweet">Post</string>
+    <string name="profile">Profile</string>
 
 </resources>
