@@ -17,10 +17,9 @@ import cz.msebera.android.httpclient.Header;
  * Project: TwitterCProject
  * Date: 8/9/16
  */
-public class home_timeline_fragment extends tweets_list_fragment {
+public class HomeTimelineFragment extends TweetsListFragment {
     @Override
     protected void populateTimeline() {
-        populateFromDb();
         client.getHomeTimeline(new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

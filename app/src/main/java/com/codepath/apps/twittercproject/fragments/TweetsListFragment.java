@@ -29,7 +29,7 @@ import butterknife.Unbinder;
  * Project: TwitterCProject
  * Date: 8/8/16
  */
-public abstract class tweets_list_fragment extends Fragment {
+public abstract class TweetsListFragment extends Fragment {
 
     private Unbinder unbinder;
     protected TwitterClient client;

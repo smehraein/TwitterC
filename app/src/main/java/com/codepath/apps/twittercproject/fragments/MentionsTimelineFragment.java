@@ -17,7 +17,7 @@ import cz.msebera.android.httpclient.Header;
  * Project: TwitterCProject
  * Date: 8/9/16
  */
-public class mentions_timeline_fragment extends tweets_list_fragment {
+public class MentionsTimelineFragment extends TweetsListFragment {
 
     @Override
     protected void populateTimeline() {
