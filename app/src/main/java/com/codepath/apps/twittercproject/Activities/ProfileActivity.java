@@ -43,8 +43,9 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
         setSupportActionBar(tbProfile);
+        String screenName = getIntent().getStringExtra("screen_name");
         TwitterClient twitterClient = TwitterApplication.getRestClient();
-        twitterClient.getUserInfo(new JsonHttpResponseHandler(){
+        twitterClient.getUserInfo(screenName, new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
@@ -52,7 +53,6 @@ public class ProfileActivity extends AppCompatActivity {
                 populateHeader(user);
             }
         });
-        String screenName = getIntent().getStringExtra("screen_name");
         if (savedInstanceState == null) {
             UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(screenName);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

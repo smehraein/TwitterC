@@ -40,6 +40,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         holder.tvDate.setText(tweet.getCreatedAtRelative());
         holder.ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfileImage);
+        holder.ivProfileImage.setTag(R.id.screen_name, tweet.getUser().getScreenName());
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.twittercproject.R;
@@ -68,6 +69,13 @@ public class TimelineActivity extends AppCompatActivity {
             fragment.addTweet(tweet);
 
         }
+    }
+
+    public void showUserProfile(View view) {
+        String screenName = (String) view.getTag(R.id.screen_name);
+        Intent intent = new Intent(TimelineActivity.this, ProfileActivity.class);
+        intent.putExtra("screen_name", screenName);
+        startActivity(intent);
     }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
