@@ -14,5 +14,10 @@
     <string name="tweet_hint">Enter a new tweet…</string>
     <string name="post_tweet">Post</string>
     <string name="profile">Profile</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="name">Name</string>
+    <string name="tagline">Tagline</string>
+    <string name="followers_placeholder">5 Followers</string>
+    <string name="following_placeholder">3 Following</string>
 
 </resources>
