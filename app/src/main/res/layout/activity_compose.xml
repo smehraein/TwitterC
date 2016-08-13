@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:text="@string/post_tweet"
         android:id="@+id/btnSubmit"
-        android:layout_below="@+id/etTweet"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/etTweet"
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,6 +42,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
         android:id="@+id/tvCharCount"
-        android:layout_above="@+id/etTweet"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/btnSubmit"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

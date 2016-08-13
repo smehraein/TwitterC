@@ -15,13 +15,15 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.twittercproject.R;
 import com.codepath.apps.twittercproject.fragments.HomeTimelineFragment;
 import com.codepath.apps.twittercproject.fragments.MentionsTimelineFragment;
+import com.codepath.apps.twittercproject.fragments.TweetsListFragment;
+import com.codepath.apps.twittercproject.models.Tweet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimelineActivity extends AppCompatActivity {
 
-//    private static int REQUEST_POST_TWEET = 20;
+    private static int REQUEST_POST_TWEET = 20;
 
     @BindView(R.id.tbTimeline)
     Toolbar tbTimeline;
@@ -48,8 +50,8 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void onClickCompose(MenuItem item) {
-//        Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-//        startActivityForResult(intent, REQUEST_POST_TWEET);
+        Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+        startActivityForResult(intent, REQUEST_POST_TWEET);
     }
 
     public void onProfileView(MenuItem item) {
@@ -57,15 +59,16 @@ public class TimelineActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == REQUEST_POST_TWEET && resultCode == RESULT_OK) {
-//            Tweet tweet = (Tweet) data.getSerializableExtra(Tweet.INTENT_TWEET);
-//            tweets.add(0, tweet);
-//            aTweets.notifyItemInserted(0);
-//            layoutManager.scrollToPosition(0);
-//        }
-//    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_POST_TWEET && resultCode == RESULT_OK && viewPager.getCurrentItem() == 0) {
+            Tweet tweet = (Tweet) data.getSerializableExtra(Tweet.INTENT_TWEET);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            TweetsListFragment fragment = (TweetsListFragment) fragmentManager.getFragments().get(0);
+            fragment.addTweet(tweet);
+
+        }
+    }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {
         private String tabTitles[] = { "Home", "Mentions" };

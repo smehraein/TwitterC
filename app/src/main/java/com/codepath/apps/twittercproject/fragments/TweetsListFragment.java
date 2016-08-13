@@ -90,6 +90,12 @@ public abstract class TweetsListFragment extends Fragment {
         });
     }
 
+    public void addTweet(Tweet tweet) {
+        tweets.add(0, tweet);
+        aTweets.notifyItemInserted(0);
+        layoutManager.scrollToPosition(0);
+    }
+
     protected abstract void populateTimeline();
 
     protected abstract void getMoreTweets(long maxId);
