@@ -44,6 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:autoLink="all"
         android:id="@+id/tvDetailBody"
         android:layout_below="@+id/ivDetailProfilePic"
         android:text="@string/tweet_body_placeholder"/>
