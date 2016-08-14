@@ -1,16 +1,18 @@
 package com.codepath.apps.twittercproject.Activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.apps.twittercproject.R;
 import com.codepath.apps.twittercproject.TwitterApplication;
@@ -70,6 +72,12 @@ public class ComposeActivity extends AppCompatActivity {
     public void submitTweet(Button button) {
         String tweetBody = etTweet.getText().toString();
         if (!TextUtils.isEmpty(tweetBody)) {
+            final Context context = this;
+            final ProgressDialog pd = new ProgressDialog(context);
+            pd.setTitle("Posting tweet...");
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.show();
             client.postTweet(tweetBody, new JsonHttpResponseHandler(){
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -78,11 +86,13 @@ public class ComposeActivity extends AppCompatActivity {
                     intent.putExtra(Tweet.INTENT_TWEET, tweet);
                     setResult(RESULT_OK, intent);
                     finish();
+                    pd.dismiss();
                 }
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                    Log.d("DEBUG", errorResponse.toString());
+                    Toast.makeText(context, "Unable to post tweet.", Toast.LENGTH_LONG).show();
+                    pd.dismiss();
                 }
             });
         }

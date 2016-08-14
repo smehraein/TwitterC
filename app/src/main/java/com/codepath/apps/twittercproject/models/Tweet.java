@@ -26,7 +26,7 @@ public class Tweet extends Model implements Serializable {
     public static String INTENT_TWEET = "intent_tweet";
 
     public enum TIMELINES_ENUM {
-        HOME_TIMELINE, MENTIONS_TIMELINE
+        HOME_TIMELINE, MENTIONS_TIMELINE, USER_TIMELINE
     }
 
     @Column(name = "Body")
