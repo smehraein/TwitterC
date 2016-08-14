@@ -19,5 +19,7 @@
     <string name="tagline">Tagline</string>
     <string name="followers_placeholder">5 Followers</string>
     <string name="following_placeholder">3 Following</string>
+    <string name="profile_pic">Profile Pic</string>
+    <string name="screenname">ScreenName</string>
 
 </resources>

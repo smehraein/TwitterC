@@ -3,6 +3,7 @@ package com.codepath.apps.twittercproject.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.apps.twittercproject.Adapters.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.twittercproject.Adapters.ItemClickSupport;
 import com.codepath.apps.twittercproject.Adapters.TweetsAdapter;
 import com.codepath.apps.twittercproject.DatabaseManager;
 import com.codepath.apps.twittercproject.R;
@@ -86,6 +88,16 @@ public abstract class TweetsListFragment extends Fragment {
             @Override
             public void onRefresh() {
                 populateTimeline();
+            }
+        });
+
+        ItemClickSupport.addTo(rvTweets).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+            @Override
+            public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                Tweet tweet = tweets.get(position);
+                FragmentManager manager = getFragmentManager();
+                TweetDetailFragment tweetDetailFragment = TweetDetailFragment.newInstance(tweet);
+                tweetDetailFragment.show(manager, "fragment_tweet_detail");
             }
         });
     }
